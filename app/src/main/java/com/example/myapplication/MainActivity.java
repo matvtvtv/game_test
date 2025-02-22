@@ -34,7 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private GameLogic gameLogic; // Логика игры
 
     private Keyboard.Key key = new Keyboard.Key("", new Size(12,56));
-    private List<Keyboard.Key> list = new ArrayList<>();
+    private List<Keyboard.Key> list = Arrays.asList(
+                new Key("й", 12, 52);
+                new Key("ц", 12, 52);
+                new Key("у", 12, 52);
+                new Key("к", 12, 52);
+                new Key("е", 12, 52);
+                new Key("н", 12, 52);
+                new Key("г", 12, 52);
+                new Key("ш", 12, 52);
+                new Key("щ", 12, 52);
+                new Key("з", 12, 52);
+                new Key("х", 12, 52);
+                new Key("ф", 12, 52);
+                new Key("ы", 12, 52);
+                new Key("в", 12, 52);
+);
     private Keyboard x  = new Keyboard(list);
 
     @Override

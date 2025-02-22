@@ -43,5 +43,10 @@ public class Keyboard {
             this.keyText = keyText;
             this.size = size;
         }
+
+        public Key(String keyText, int width, int height) {
+            this.keyText = keyText;
+            this.size = new Size(width, height);
+        }
     }
 }
