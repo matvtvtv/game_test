@@ -18,11 +18,18 @@ import lombok.Setter;
 public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyViewHolder> {
 
     List<Keyboard.Key> keys;
-    @Setter
-    View.OnClickListener onClickListener;
+    @Setter View.OnClickListener onClickListener;
 
     public KeyboardAdapter(List<Keyboard.Key> keys) {
         this.keys = keys;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position < 13) return 1;
+        if (position < 25) return 2;
+        if (position < 33) return 3;
+        return 0;
     }
 
     @NonNull
@@ -30,6 +37,18 @@ public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyVie
     public KeyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.key_item, parent, false);
+        ViewGroup.LayoutParams params = itemView.getLayoutParams();
+
+        switch (viewType) {
+            case 1:
+            case 3:
+                params.width = parent.getMeasuredWidth()/12;
+                break;
+            case 2:
+                params.width = parent.getMeasuredWidth()/11;
+                break;
+        }
+
         return new KeyViewHolder(itemView);
     }
 
@@ -37,9 +56,7 @@ public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyVie
     public void onBindViewHolder(@NonNull KeyViewHolder holder, int position) {
         Keyboard.Key key = keys.get(position);
 
-        holder.keyBtn.setText(key.getKeyText());
-        holder.keyBtn.setWidth(key.getSize().getWidth());
-        holder.keyBtn.setHeight(key.getSize().getHeight());
+        holder.bind(key);
 
         holder.keyBtn.setOnClickListener(view -> {
             if(onClickListener != null) onClickListener.onClick(view);
@@ -51,12 +68,16 @@ public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyVie
         return keys.size();
     }
 
-    static class KeyViewHolder extends RecyclerView.ViewHolder {
+    public static class KeyViewHolder extends RecyclerView.ViewHolder {
         Button keyBtn;
 
         public KeyViewHolder(@NonNull View itemView) {
             super(itemView);
-            keyBtn = itemView.findViewById(R.id.button);
+            keyBtn = itemView.findViewById(R.id.key);
+        }
+
+        public void bind(Keyboard.Key key) {
+            keyBtn.setText(key.getKeyText());
         }
     }
 }

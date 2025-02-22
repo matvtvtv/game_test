@@ -13,11 +13,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Adapter.KeyboardAdapter;
 import com.example.myapplication.Keyboard.Keyboard;
 import com.example.myapplication.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,32 +37,48 @@ public class MainActivity extends AppCompatActivity {
 
     private GameLogic gameLogic; // Логика игры
 
-    private Keyboard.Key key = new Keyboard.Key("", new Size(12,56));
-    private List<Keyboard.Key> list = Arrays.asList(
-                new Key("й", 12, 52);
-                new Key("ц", 12, 52);
-                new Key("у", 12, 52);
-                new Key("к", 12, 52);
-                new Key("е", 12, 52);
-                new Key("н", 12, 52);
-                new Key("г", 12, 52);
-                new Key("ш", 12, 52);
-                new Key("щ", 12, 52);
-                new Key("з", 12, 52);
-                new Key("х", 12, 52);
-                new Key("ф", 12, 52);
-                new Key("ы", 12, 52);
-                new Key("в", 12, 52);
-);
-    private Keyboard x  = new Keyboard(list);
+    private Keyboard keyboard;
+    private final List<Keyboard.Key> keyList = Arrays.asList(
+            new Keyboard.Key("й", 12, 52),
+            new Keyboard.Key("ц", 12, 52),
+            new Keyboard.Key("у", 12, 52),
+            new Keyboard.Key("к", 12, 52),
+            new Keyboard.Key("е", 12, 52),
+            new Keyboard.Key("н", 12, 52),
+            new Keyboard.Key("г", 12, 52),
+            new Keyboard.Key("ш", 12, 52),
+            new Keyboard.Key("щ", 12, 52),
+            new Keyboard.Key("з", 12, 52),
+            new Keyboard.Key("х", 12, 52),
+            new Keyboard.Key("ъ", 12, 52),
+
+            new Keyboard.Key("ф", 12, 52),
+            new Keyboard.Key("ы", 12, 52),
+            new Keyboard.Key("в", 12, 52),
+            new Keyboard.Key("а", 12, 52),
+            new Keyboard.Key("п", 12, 52),
+            new Keyboard.Key("р", 12, 52),
+            new Keyboard.Key("о", 12, 52),
+            new Keyboard.Key("л", 12, 52),
+            new Keyboard.Key("д", 12, 52),
+            new Keyboard.Key("ж", 12, 52),
+            new Keyboard.Key("э", 12, 52),
+
+            new Keyboard.Key("я", 12, 52),
+            new Keyboard.Key("ч", 12, 52),
+            new Keyboard.Key("с", 12, 52),
+            new Keyboard.Key("м", 12, 52),
+            new Keyboard.Key("и", 12, 52),
+            new Keyboard.Key("т", 12, 52),
+            new Keyboard.Key("ь", 12, 52),
+            new Keyboard.Key("б", 12, 52),
+            new Keyboard.Key("ю", 12, 52)
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        list.add(key);
-
         setContentView(R.layout.activity_main);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         // Инициализация логики игры (6 попыток)
@@ -83,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 "нитка", // н, и, т, к, а
                 "блоки", // б, л, о, к, и
                 "фронт"  // ф, р, о, н, т
-                };
+        };
         // Пример: загадано слово "ВАГОН"
-        gameLogic.startNewGame(words[(int)(Math.random() * words.length)]);
+        gameLogic.startNewGame(words[(int) (Math.random() * words.length)]);
 
         gridLetters = findViewById(R.id.gridLetters);
         letterCells = new ArrayList<>();
@@ -98,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
             int screenHeight = displayMetrics.heightPixels;
             int screenWidth = displayMetrics.widthPixels;
 
-            int cubeHeight = (int) ((screenHeight * 0.7f) / MAX_ATTEMPTS  - (screenWidth/40));
-            int cubeWidth = (int) (screenWidth / WORD_LENGTH - (screenWidth/30));
+            int cubeHeight = (int) ((screenHeight * 0.7f) / MAX_ATTEMPTS - (screenWidth / 40));
+            int cubeWidth = (int) (screenWidth / WORD_LENGTH - (screenWidth / 30));
 
             int cubeSize = Math.min(cubeWidth, cubeHeight);
 
@@ -116,93 +136,100 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Обработчик кликов для кнопок клавиатуры (пример для кнопок "А", "Б", "В", "Г")
-        Button btnА = findViewById(R.id.btnА);
-        Button btnБ = findViewById(R.id.btnБ);
-        Button btnВ = findViewById(R.id.btnВ);
-        Button btnГ = findViewById(R.id.btnГ);
-        Button btnД = findViewById(R.id.btnД);
-        Button btnЕ = findViewById(R.id.btnЕ);
-        Button btnЖ = findViewById(R.id.btnЖ);
-        Button btnЗ = findViewById(R.id.btnЗ);
-        Button btnИ = findViewById(R.id.btnИ);
-        Button btnЙ = findViewById(R.id.btnЙ);
-        Button btnК = findViewById(R.id.btnК);
-        Button btnЛ = findViewById(R.id.btnЛ);
-        Button btnМ = findViewById(R.id.btnМ);
-        Button btnН = findViewById(R.id.btnН);
-        Button btnО = findViewById(R.id.btnО);
-        Button btnП = findViewById(R.id.btnП);
-        Button btnР = findViewById(R.id.btnР);
-        Button btnС = findViewById(R.id.btnС);
-        Button btnТ = findViewById(R.id.btnТ);
-        Button btnУ = findViewById(R.id.btnУ);
-        Button btnФ = findViewById(R.id.btnФ);
-        Button btnХ = findViewById(R.id.btnХ);
-        Button btnЦ = findViewById(R.id.btnЦ);
-        Button btnЧ = findViewById(R.id.btnЧ);
-        Button btnШ = findViewById(R.id.btnШ);
-        Button btnЩ = findViewById(R.id.btnЩ);
-        Button btnЪ = findViewById(R.id.btnЪ);
-        Button btnЫ = findViewById(R.id.btnЫ);
-        Button btnЬ = findViewById(R.id.btnЬ);
-        Button btnЭ = findViewById(R.id.btnЭ);
-        Button btnЮ = findViewById(R.id.btnЮ);
-        Button btnЯ = findViewById(R.id.btnЯ);
+//        Button btnА = findViewById(R.id.btnА);
+//        Button btnБ = findViewById(R.id.btnБ);
+//        Button btnВ = findViewById(R.id.btnВ);
+//        Button btnГ = findViewById(R.id.btnГ);
+//        Button btnД = findViewById(R.id.btnД);
+//        Button btnЕ = findViewById(R.id.btnЕ);
+//        Button btnЖ = findViewById(R.id.btnЖ);
+//        Button btnЗ = findViewById(R.id.btnЗ);
+//        Button btnИ = findViewById(R.id.btnИ);
+//        Button btnЙ = findViewById(R.id.btnЙ);
+//        Button btnК = findViewById(R.id.btnК);
+//        Button btnЛ = findViewById(R.id.btnЛ);
+//        Button btnМ = findViewById(R.id.btnМ);
+//        Button btnН = findViewById(R.id.btnН);
+//        Button btnО = findViewById(R.id.btnО);
+//        Button btnП = findViewById(R.id.btnП);
+//        Button btnР = findViewById(R.id.btnР);
+//        Button btnС = findViewById(R.id.btnС);
+//        Button btnТ = findViewById(R.id.btnТ);
+//        Button btnУ = findViewById(R.id.btnУ);
+//        Button btnФ = findViewById(R.id.btnФ);
+//        Button btnХ = findViewById(R.id.btnХ);
+//        Button btnЦ = findViewById(R.id.btnЦ);
+//        Button btnЧ = findViewById(R.id.btnЧ);
+//        Button btnШ = findViewById(R.id.btnШ);
+//        Button btnЩ = findViewById(R.id.btnЩ);
+//        Button btnЪ = findViewById(R.id.btnЪ);
+//        Button btnЫ = findViewById(R.id.btnЫ);
+//        Button btnЬ = findViewById(R.id.btnЬ);
+//        Button btnЭ = findViewById(R.id.btnЭ);
+//        Button btnЮ = findViewById(R.id.btnЮ);
+//        Button btnЯ = findViewById(R.id.btnЯ);
         GridLayout layout = findViewById(R.id.gridLetters);
-
 
         layout.setColumnCount(WORD_LENGTH);
 
-        View.OnClickListener letterClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
-                    Button btn = (Button) v;
-                    String letter = btn.getText().toString();
-                    letterCells.get(currentCellIndex).setText(letter);
-                    currentCellIndex++;
-                }
+//        View.OnClickListener letterClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
+//                    Button btn = (Button) v;
+//                    String letter = btn.getText().toString();
+//                    letterCells.get(currentCellIndex).setText(letter);
+//                    currentCellIndex++;
+//                }
+//            }
+//        };
+
+        keyboard = new Keyboard(findViewById(R.id.keyboard), keyList);
+
+        keyboard.setOnKeyClickListener(v -> {
+            if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
+                Button btn = (Button) v;
+                String letter = btn.getText().toString();
+                letterCells.get(currentCellIndex).setText(letter);
+                currentCellIndex++;
             }
-        };
+        });
+
+        keyboard.create(this, binding.getRoot());
 
 
-        btnА.setOnClickListener(letterClickListener);
-        btnБ.setOnClickListener(letterClickListener);
-        btnВ.setOnClickListener(letterClickListener);
-        btnГ.setOnClickListener(letterClickListener);
-        btnД.setOnClickListener(letterClickListener);
-        btnЕ.setOnClickListener(letterClickListener);
-        btnЖ.setOnClickListener(letterClickListener);
-        btnЗ.setOnClickListener(letterClickListener);
-        btnИ.setOnClickListener(letterClickListener);
-        btnЙ.setOnClickListener(letterClickListener);
-        btnК.setOnClickListener(letterClickListener);
-        btnЛ.setOnClickListener(letterClickListener);
-        btnМ.setOnClickListener(letterClickListener);
-        btnН.setOnClickListener(letterClickListener);
-        btnО.setOnClickListener(letterClickListener);
-        btnП.setOnClickListener(letterClickListener);
-        btnР.setOnClickListener(letterClickListener);
-        btnС.setOnClickListener(letterClickListener);
-        btnТ.setOnClickListener(letterClickListener);
-        btnУ.setOnClickListener(letterClickListener);
-        btnФ.setOnClickListener(letterClickListener);
-        btnХ.setOnClickListener(letterClickListener);
-        btnЦ.setOnClickListener(letterClickListener);
-        btnЧ.setOnClickListener(letterClickListener);
-        btnШ.setOnClickListener(letterClickListener);
-        btnЩ.setOnClickListener(letterClickListener);
-        btnЪ.setOnClickListener(letterClickListener);
-        btnЫ.setOnClickListener(letterClickListener);
-        btnЬ.setOnClickListener(letterClickListener);
-        btnЭ.setOnClickListener(letterClickListener);
-        btnЮ.setOnClickListener(letterClickListener);
-        btnЯ.setOnClickListener(letterClickListener);
-
-
-
-
-
+//        btnА.setOnClickListener(letterClickListener);
+//        btnБ.setOnClickListener(letterClickListener);
+//        btnВ.setOnClickListener(letterClickListener);
+//        btnГ.setOnClickListener(letterClickListener);
+//        btnД.setOnClickListener(letterClickListener);
+//        btnЕ.setOnClickListener(letterClickListener);
+//        btnЖ.setOnClickListener(letterClickListener);
+//        btnЗ.setOnClickListener(letterClickListener);
+//        btnИ.setOnClickListener(letterClickListener);
+//        btnЙ.setOnClickListener(letterClickListener);
+//        btnК.setOnClickListener(letterClickListener);
+//        btnЛ.setOnClickListener(letterClickListener);
+//        btnМ.setOnClickListener(letterClickListener);
+//        btnН.setOnClickListener(letterClickListener);
+//        btnО.setOnClickListener(letterClickListener);
+//        btnП.setOnClickListener(letterClickListener);
+//        btnР.setOnClickListener(letterClickListener);
+//        btnС.setOnClickListener(letterClickListener);
+//        btnТ.setOnClickListener(letterClickListener);
+//        btnУ.setOnClickListener(letterClickListener);
+//        btnФ.setOnClickListener(letterClickListener);
+//        btnХ.setOnClickListener(letterClickListener);
+//        btnЦ.setOnClickListener(letterClickListener);
+//        btnЧ.setOnClickListener(letterClickListener);
+//        btnШ.setOnClickListener(letterClickListener);
+//        btnЩ.setOnClickListener(letterClickListener);
+//        btnЪ.setOnClickListener(letterClickListener);
+//        btnЫ.setOnClickListener(letterClickListener);
+//        btnЬ.setOnClickListener(letterClickListener);
+//        btnЭ.setOnClickListener(letterClickListener);
+//        btnЮ.setOnClickListener(letterClickListener);
+//        btnЯ.setOnClickListener(letterClickListener);
 
         // Добавьте остальные кнопки аналогичным образом
 
@@ -217,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        KeyboardAdapter adapter = keyboard.getKeyboardAdapter();
 
         // Кнопка проверки
         Button btnCheck = findViewById(R.id.btnCheck);

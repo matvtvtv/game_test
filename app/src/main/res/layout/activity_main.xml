@@ -8,6 +8,29 @@
 
     <!-- Сетка для ввода букв: 6 строк x 5 столбцов -->
 
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+
+        android:text="Проверка"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnCheck"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <GridLayout
         android:id="@+id/gridLetters"
         android:layout_width="wrap_content"
@@ -33,16 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/keyboard"
-            android:layout_width="0dp"
-            android:layout_height="59dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
@@ -52,13 +65,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
-                android:id="@+id/btnCheck"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-
-                android:text="Проверка" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
