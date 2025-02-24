@@ -1,14 +1,19 @@
 package com.example.myapplication.Adapter;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Keyboard.Keyboard;
+import com.example.myapplication.LetterStatus;
 import com.example.myapplication.R;
 
 import java.util.List;
@@ -18,17 +23,22 @@ import lombok.Setter;
 public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyViewHolder> {
 
     List<Keyboard.Key> keys;
+    Context context;
     @Setter View.OnClickListener onClickListener;
 
-    public KeyboardAdapter(List<Keyboard.Key> keys) {
+    public KeyboardAdapter(Context context, List<Keyboard.Key> keys) {
         this.keys = keys;
+        this.context = context;
     }
 
     @Override
     public int getItemViewType(int position) {
+        if(keys.get(position).getKeyText().equals("Del")) return 4;
+
         if (position < 13) return 1;
         if (position < 25) return 2;
         if (position < 33) return 3;
+
         return 0;
     }
 
@@ -47,6 +57,8 @@ public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyVie
             case 2:
                 params.width = parent.getMeasuredWidth()/11;
                 break;
+            case 4:
+                params.width = parent.getMeasuredWidth()/5;
         }
 
         return new KeyViewHolder(itemView);
@@ -56,11 +68,14 @@ public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyVie
     public void onBindViewHolder(@NonNull KeyViewHolder holder, int position) {
         Keyboard.Key key = keys.get(position);
 
-        holder.bind(key);
+        holder.bind(key, context);
 
         holder.keyBtn.setOnClickListener(view -> {
             if(onClickListener != null) onClickListener.onClick(view);
+            view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.alpha));
         });
+
+
     }
 
     @Override
@@ -76,8 +91,23 @@ public class KeyboardAdapter extends RecyclerView.Adapter<KeyboardAdapter.KeyVie
             keyBtn = itemView.findViewById(R.id.key);
         }
 
-        public void bind(Keyboard.Key key) {
+        public void bind(Keyboard.Key key, Context context) {
             keyBtn.setText(key.getKeyText());
+
+            switch (key.getStatus()) {
+                case GRAY:
+                    keyBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.cell_background));
+                    break;
+                case YELLOW:
+                    keyBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.yellow));
+                    break;
+                case GREEN:
+                    keyBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.green));
+                    break;
+                case UNDEFINED:
+                    keyBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.key_background));
+                    break;
+            }
         }
     }
 }

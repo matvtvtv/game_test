@@ -39,40 +39,42 @@ public class MainActivity extends AppCompatActivity {
 
     private Keyboard keyboard;
     private final List<Keyboard.Key> keyList = Arrays.asList(
-            new Keyboard.Key("й", 12, 52),
-            new Keyboard.Key("ц", 12, 52),
-            new Keyboard.Key("у", 12, 52),
-            new Keyboard.Key("к", 12, 52),
-            new Keyboard.Key("е", 12, 52),
-            new Keyboard.Key("н", 12, 52),
-            new Keyboard.Key("г", 12, 52),
-            new Keyboard.Key("ш", 12, 52),
-            new Keyboard.Key("щ", 12, 52),
-            new Keyboard.Key("з", 12, 52),
-            new Keyboard.Key("х", 12, 52),
-            new Keyboard.Key("ъ", 12, 52),
+            new Keyboard.Key("Й"),
+            new Keyboard.Key("Ц"),
+            new Keyboard.Key("У"),
+            new Keyboard.Key("К"),
+            new Keyboard.Key("Е"),
+            new Keyboard.Key("Н"),
+            new Keyboard.Key("Г"),
+            new Keyboard.Key("Ш"),
+            new Keyboard.Key("Щ"),
+            new Keyboard.Key("З"),
+            new Keyboard.Key("Х"),
+            new Keyboard.Key("Ъ"),
 
-            new Keyboard.Key("ф", 12, 52),
-            new Keyboard.Key("ы", 12, 52),
-            new Keyboard.Key("в", 12, 52),
-            new Keyboard.Key("а", 12, 52),
-            new Keyboard.Key("п", 12, 52),
-            new Keyboard.Key("р", 12, 52),
-            new Keyboard.Key("о", 12, 52),
-            new Keyboard.Key("л", 12, 52),
-            new Keyboard.Key("д", 12, 52),
-            new Keyboard.Key("ж", 12, 52),
-            new Keyboard.Key("э", 12, 52),
+            new Keyboard.Key("Ф"),
+            new Keyboard.Key("Ы"),
+            new Keyboard.Key("В"),
+            new Keyboard.Key("А"),
+            new Keyboard.Key("П"),
+            new Keyboard.Key("Р"),
+            new Keyboard.Key("О"),
+            new Keyboard.Key("Л"),
+            new Keyboard.Key("Д"),
+            new Keyboard.Key("Ж"),
+            new Keyboard.Key("Э"),
 
-            new Keyboard.Key("я", 12, 52),
-            new Keyboard.Key("ч", 12, 52),
-            new Keyboard.Key("с", 12, 52),
-            new Keyboard.Key("м", 12, 52),
-            new Keyboard.Key("и", 12, 52),
-            new Keyboard.Key("т", 12, 52),
-            new Keyboard.Key("ь", 12, 52),
-            new Keyboard.Key("б", 12, 52),
-            new Keyboard.Key("ю", 12, 52)
+            new Keyboard.Key("Я"),
+            new Keyboard.Key("Ч"),
+            new Keyboard.Key("С"),
+            new Keyboard.Key("М"),
+            new Keyboard.Key("И"),
+            new Keyboard.Key("Т"),
+            new Keyboard.Key("Ь"),
+            new Keyboard.Key("Б"),
+            new Keyboard.Key("Ь"),
+            new Keyboard.Key("Del", LetterStatus.GRAY)
+
     );
 
     @Override
@@ -135,115 +137,48 @@ public class MainActivity extends AppCompatActivity {
             letterCells.add(cell);
         }
 
-        // Обработчик кликов для кнопок клавиатуры (пример для кнопок "А", "Б", "В", "Г")
-//        Button btnА = findViewById(R.id.btnА);
-//        Button btnБ = findViewById(R.id.btnБ);
-//        Button btnВ = findViewById(R.id.btnВ);
-//        Button btnГ = findViewById(R.id.btnГ);
-//        Button btnД = findViewById(R.id.btnД);
-//        Button btnЕ = findViewById(R.id.btnЕ);
-//        Button btnЖ = findViewById(R.id.btnЖ);
-//        Button btnЗ = findViewById(R.id.btnЗ);
-//        Button btnИ = findViewById(R.id.btnИ);
-//        Button btnЙ = findViewById(R.id.btnЙ);
-//        Button btnК = findViewById(R.id.btnК);
-//        Button btnЛ = findViewById(R.id.btnЛ);
-//        Button btnМ = findViewById(R.id.btnМ);
-//        Button btnН = findViewById(R.id.btnН);
-//        Button btnО = findViewById(R.id.btnО);
-//        Button btnП = findViewById(R.id.btnП);
-//        Button btnР = findViewById(R.id.btnР);
-//        Button btnС = findViewById(R.id.btnС);
-//        Button btnТ = findViewById(R.id.btnТ);
-//        Button btnУ = findViewById(R.id.btnУ);
-//        Button btnФ = findViewById(R.id.btnФ);
-//        Button btnХ = findViewById(R.id.btnХ);
-//        Button btnЦ = findViewById(R.id.btnЦ);
-//        Button btnЧ = findViewById(R.id.btnЧ);
-//        Button btnШ = findViewById(R.id.btnШ);
-//        Button btnЩ = findViewById(R.id.btnЩ);
-//        Button btnЪ = findViewById(R.id.btnЪ);
-//        Button btnЫ = findViewById(R.id.btnЫ);
-//        Button btnЬ = findViewById(R.id.btnЬ);
-//        Button btnЭ = findViewById(R.id.btnЭ);
-//        Button btnЮ = findViewById(R.id.btnЮ);
-//        Button btnЯ = findViewById(R.id.btnЯ);
+
         GridLayout layout = findViewById(R.id.gridLetters);
 
         layout.setColumnCount(WORD_LENGTH);
 
-//        View.OnClickListener letterClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
-//                    Button btn = (Button) v;
-//                    String letter = btn.getText().toString();
-//                    letterCells.get(currentCellIndex).setText(letter);
-//                    currentCellIndex++;
-//                }
-//            }
-//        };
+        View.OnClickListener letterClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
+                    Button btn = (Button) v;
+                    String letter = btn.getText().toString();
+                    letterCells.get(currentCellIndex).setText(letter);
+                    currentCellIndex++;
+                }
+            }
+        };
 
         keyboard = new Keyboard(findViewById(R.id.keyboard), keyList);
 
         keyboard.setOnKeyClickListener(v -> {
-            if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
-                Button btn = (Button) v;
-                String letter = btn.getText().toString();
-                letterCells.get(currentCellIndex).setText(letter);
-                currentCellIndex++;
+            Button btn = (Button) v;
+            String letter = btn.getText().toString();
+
+            if (letter.equals("Del")) {
+                if (currentCellIndex > currentAttemptIndex * WORD_LENGTH) {
+                    currentCellIndex--; // Шаг назад
+                    letterCells.get(currentCellIndex).setText(""); // Очищаем букву
+                }
+            } else {
+                if (currentCellIndex < (currentAttemptIndex + 1) * WORD_LENGTH) {
+                    letterCells.get(currentCellIndex).setText(letter);
+                    currentCellIndex++;
+                }
             }
         });
 
         keyboard.create(this, binding.getRoot());
 
 
-//        btnА.setOnClickListener(letterClickListener);
-//        btnБ.setOnClickListener(letterClickListener);
-//        btnВ.setOnClickListener(letterClickListener);
-//        btnГ.setOnClickListener(letterClickListener);
-//        btnД.setOnClickListener(letterClickListener);
-//        btnЕ.setOnClickListener(letterClickListener);
-//        btnЖ.setOnClickListener(letterClickListener);
-//        btnЗ.setOnClickListener(letterClickListener);
-//        btnИ.setOnClickListener(letterClickListener);
-//        btnЙ.setOnClickListener(letterClickListener);
-//        btnК.setOnClickListener(letterClickListener);
-//        btnЛ.setOnClickListener(letterClickListener);
-//        btnМ.setOnClickListener(letterClickListener);
-//        btnН.setOnClickListener(letterClickListener);
-//        btnО.setOnClickListener(letterClickListener);
-//        btnП.setOnClickListener(letterClickListener);
-//        btnР.setOnClickListener(letterClickListener);
-//        btnС.setOnClickListener(letterClickListener);
-//        btnТ.setOnClickListener(letterClickListener);
-//        btnУ.setOnClickListener(letterClickListener);
-//        btnФ.setOnClickListener(letterClickListener);
-//        btnХ.setOnClickListener(letterClickListener);
-//        btnЦ.setOnClickListener(letterClickListener);
-//        btnЧ.setOnClickListener(letterClickListener);
-//        btnШ.setOnClickListener(letterClickListener);
-//        btnЩ.setOnClickListener(letterClickListener);
-//        btnЪ.setOnClickListener(letterClickListener);
-//        btnЫ.setOnClickListener(letterClickListener);
-//        btnЬ.setOnClickListener(letterClickListener);
-//        btnЭ.setOnClickListener(letterClickListener);
-//        btnЮ.setOnClickListener(letterClickListener);
-//        btnЯ.setOnClickListener(letterClickListener);
-
-        // Добавьте остальные кнопки аналогичным образом
 
         // Кнопка удаления
-        Button btnDelete = findViewById(R.id.btnDelete);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentCellIndex > currentAttemptIndex * WORD_LENGTH) {
-                    currentCellIndex--;
-                    letterCells.get(currentCellIndex).setText("");
-                }
-            }
-        });
+
 
         KeyboardAdapter adapter = keyboard.getKeyboardAdapter();
 
@@ -271,14 +206,29 @@ public class MainActivity extends AppCompatActivity {
                     // Изменяем цвет клеток в зависимости от результата
                     for (int i = 0; i < WORD_LENGTH; i++) {
                         TextView cell = letterCells.get(start + i);
+                        Keyboard.Key key = keyboard.findByKeyText(String.valueOf(result.getGuess().charAt(i)));
                         switch (result.getStatuses()[i]) {
                             case GREEN:
+                                if (key != null &&
+                                        (key.getStatus() == LetterStatus.UNDEFINED
+                                        || key.getStatus() == LetterStatus.YELLOW)) {
+                                    key.setStatus(LetterStatus.GREEN);
+                                    keyboard.notifyKeyChanged(key);
+                                }
                                 cell.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green));
                                 break;
                             case YELLOW:
+                                if (key != null && key.getStatus() == LetterStatus.UNDEFINED) {
+                                    key.setStatus(LetterStatus.YELLOW);
+                                    keyboard.notifyKeyChanged(key);
+                                }
                                 cell.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.yellow));
                                 break;
                             case GRAY:
+                                if (key != null && key.getStatus() == LetterStatus.UNDEFINED) {
+                                    key.setStatus(LetterStatus.GRAY);
+                                    keyboard.notifyKeyChanged(key);
+                                }
                                 cell.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.gray));
                                 break;
                         }

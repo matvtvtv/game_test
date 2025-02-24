@@ -1,6 +1,7 @@
 package com.example.myapplication.Keyboard;
 
 import static com.google.android.flexbox.JustifyContent.CENTER;
+import static com.google.android.flexbox.JustifyContent.FLEX_START;
 
 import android.content.Context;
 import android.util.Size;
@@ -12,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.myapplication.Adapter.KeyboardAdapter;
+import com.example.myapplication.LetterStatus;
 import com.example.myapplication.R;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
@@ -35,7 +39,7 @@ public class Keyboard {
     }
 
     public void create(Context context, View view) {
-        keyboardAdapter = new KeyboardAdapter(keys);
+        keyboardAdapter = new KeyboardAdapter(context, keys);
         if (onKeyClickListener != null) keyboardAdapter.setOnClickListener(onKeyClickListener);
 
         keyboard.setAdapter(keyboardAdapter);
@@ -45,19 +49,39 @@ public class Keyboard {
         keyboard.setLayoutManager(layoutManager);
     }
 
+    public void notifyKeyChanged(int position) {
+        keyboardAdapter.notifyItemChanged(position);
+    }
+
+    public void notifyKeyChanged(Key key) {
+        keyboardAdapter.notifyItemChanged(getKeyPosition(key));
+    }
+
+    public Key findByKeyText(String text) {
+        for (Key key: keys) {
+            if(key.getKeyText().equals(text)) return key;
+        }
+        return null;
+    }
+
+    public int getKeyPosition(Key key) {
+        return keys.indexOf(key);
+    }
+
     @Data
     public static class Key {
         String keyText;
-        Size size;
+        LetterStatus status;
 
-        public Key(String keyText, Size size){
+        public Key(String keyText) {
             this.keyText = keyText;
-            this.size = size;
+            this.status = LetterStatus.UNDEFINED;
         }
 
-        public Key(String keyText, int width, int height) {
+
+        public Key(String keyText, LetterStatus status) {
             this.keyText = keyText;
-            this.size = new Size(width, height);
+            this.status = status;
         }
     }
 }
